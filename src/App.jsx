@@ -179,7 +179,7 @@ function App() {
           type="button"
           className={apiUrl.includes(":8000") ? "active" : ""}
           onClick={() => {
-            const url = "http://localhost:8000/samsung";
+            const url = "http://15.134.98.179/samsung";
             setApiUrl(url);
             fetchStockData(url);
           }}
