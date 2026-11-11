@@ -159,7 +159,7 @@ function App() {
               type="text"
               value={apiUrl}
               onChange={(e) => setApiUrl(e.target.value)}
-              placeholder="http://localhost:8000/samsung"
+              placeholder="http://15.134.98.179/samsung"
             />
           </div>
           <button
@@ -172,19 +172,30 @@ function App() {
         </div>
       </header>
 
-      {/* 포트 바로가기 퀵 바 */}
+      {/* 서버 및 포트 바로가기 퀵 바 */}
       <div className="quick-port-bar">
-        <span>빠른 포트 변경:</span>
+        <span>빠른 서버 선택:</span>
         <button
           type="button"
-          className={apiUrl.includes(":8000") ? "active" : ""}
+          className={apiUrl === "http://15.134.98.179/samsung" ? "active" : ""}
           onClick={() => {
             const url = "http://15.134.98.179/samsung";
             setApiUrl(url);
             fetchStockData(url);
           }}
         >
-          8000 포트
+          원격 서버 (15.134.98.179)
+        </button>
+        <button
+          type="button"
+          className={apiUrl.includes(":8000") ? "active" : ""}
+          onClick={() => {
+            const url = "http://localhost:8000/samsung";
+            setApiUrl(url);
+            fetchStockData(url);
+          }}
+        >
+          로컬 8000 포트
         </button>
         <button
           type="button"
@@ -195,18 +206,7 @@ function App() {
             fetchStockData(url);
           }}
         >
-          8080 포트
-        </button>
-        <button
-          type="button"
-          className={apiUrl.includes("/api/samsung") ? "active" : ""}
-          onClick={() => {
-            const url = "/api/samsung";
-            setApiUrl(url);
-            fetchStockData(url);
-          }}
-        >
-          Vite Proxy (/api)
+          로컬 8080 포트
         </button>
       </div>
 
@@ -225,18 +225,13 @@ function App() {
               </p>
               <ol>
                 <li>
-                  FastAPI 서버가 실행 중인가요?
-                  <code>python main.py</code> 또는{" "}
-                  <code>uvicorn main:app --reload --port 8000</code>
+                  요청 주소가 올바른지 확인해주세요 (현재: <code>{apiUrl}</code>).
                 </li>
                 <li>
-                  요청 주소가 맞는지 확인해주세요 (현재: <code>{apiUrl}</code>).
-                  질문의 <code>808800</code>은 포트 번호 <code>8000</code>의
-                  오타일 수 있습니다.
+                  원격 서버(<code>http://15.134.98.179/samsung</code>) 또는 로컬 FastAPI 서버가 실행 중인지 확인해주세요.
                 </li>
                 <li>
-                  브라우저 CORS 차단 문제일 경우, 상단의{" "}
-                  <strong>[Vite Proxy]</strong> 버튼을 클릭하여 테스트해보세요.
+                  로컬 서버 테스트 시: <code>python main.py</code> 또는 <code>uvicorn main:app --reload --port 8000</code>
                 </li>
               </ol>
             </div>
