@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import "./App.css";
 
 function App() {
-  const [apiUrl, setApiUrl] = useState("http://15.134.98.179/samsung");
+  const [apiUrl, setApiUrl] = useState("/api/samsung");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -159,7 +159,7 @@ function App() {
               type="text"
               value={apiUrl}
               onChange={(e) => setApiUrl(e.target.value)}
-              placeholder="http://15.134.98.179/samsung"
+              placeholder="/api/samsung"
             />
           </div>
           <button
@@ -177,6 +177,17 @@ function App() {
         <span>빠른 서버 선택:</span>
         <button
           type="button"
+          className={apiUrl === "/api/samsung" ? "active" : ""}
+          onClick={() => {
+            const url = "/api/samsung";
+            setApiUrl(url);
+            fetchStockData(url);
+          }}
+        >
+          ✨ 프록시 권장 (/api/samsung)
+        </button>
+        <button
+          type="button"
           className={apiUrl === "http://15.134.98.179/samsung" ? "active" : ""}
           onClick={() => {
             const url = "http://15.134.98.179/samsung";
@@ -184,7 +195,7 @@ function App() {
             fetchStockData(url);
           }}
         >
-          원격 서버 (15.134.98.179)
+          원격 직접 (15.134.98.179)
         </button>
         <button
           type="button"
@@ -195,18 +206,7 @@ function App() {
             fetchStockData(url);
           }}
         >
-          로컬 8000 포트
-        </button>
-        <button
-          type="button"
-          className={apiUrl.includes(":8080") ? "active" : ""}
-          onClick={() => {
-            const url = "http://localhost:8080/samsung";
-            setApiUrl(url);
-            fetchStockData(url);
-          }}
-        >
-          로컬 8080 포트
+          로컬 8000
         </button>
       </div>
 
@@ -225,13 +225,13 @@ function App() {
               </p>
               <ol>
                 <li>
+                  <strong>배포 환경(Vercel HTTPS):</strong> 브라우저는 보안상 HTTPS 페이지에서 일반 HTTP 주소로의 직접 요청(Mixed Content)을 자동 차단합니다. 상단의 <strong>[✨ 프록시 권장 (/api/samsung)]</strong>을 클릭해주세요.
+                </li>
+                <li>
                   요청 주소가 올바른지 확인해주세요 (현재: <code>{apiUrl}</code>).
                 </li>
                 <li>
-                  원격 서버(<code>http://15.134.98.179/samsung</code>) 또는 로컬 FastAPI 서버가 실행 중인지 확인해주세요.
-                </li>
-                <li>
-                  로컬 서버 테스트 시: <code>python main.py</code> 또는 <code>uvicorn main:app --reload --port 8000</code>
+                  원격 서버(<code>http://15.134.98.179/samsung</code>) 또는 로컬 서버 실행 상태를 확인해주세요.
                 </li>
               </ol>
             </div>
